@@ -1,0 +1,176 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Kotlin的基本语法（六） | Hexo</title><meta name="author" content="John Doe"><meta name="copyright" content="John Doe"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="数据类和密封类（或者封闭类）是Kotlin中两种特殊的类，数据类用于描述数据和相应的操作，密封类相当于枚举的扩展，用于描述有限的数据。 数据类数据类是Kotlin的一个语法糖，编译器会自动为数据类生成一些成员函数： 1data class User(val name: String, var age: Int)  如果不使用数据类，会多出十几行代码，写法如下： 123456789101112131">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin的基本语法（六）">
+<meta property="og:url" content="http://example.com/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数据类和密封类（或者封闭类）是Kotlin中两种特殊的类，数据类用于描述数据和相应的操作，密封类相当于枚举的扩展，用于描述有限的数据。 数据类数据类是Kotlin的一个语法糖，编译器会自动为数据类生成一些成员函数： 1data class User(val name: String, var age: Int)  如果不使用数据类，会多出十几行代码，写法如下： 123456789101112131">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/butterfly-icon.png">
+<meta property="article:published_time" content="2026-02-02T13:48:50.000Z">
+<meta property="article:modified_time" content="2026-02-03T11:51:55.949Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Kotlin">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/butterfly-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Kotlin的基本语法（六）",
+  "url": "http://example.com/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/",
+  "image": "http://example.com/img/butterfly-icon.png",
+  "datePublished": "2026-02-02T13:48:50.000Z",
+  "dateModified": "2026-02-03T11:51:55.949Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "John Doe",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Kotlin的基本语法（六）',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 7.3.0"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Hexo</span></a><a class="nav-page-title" href="/"><span class="site-name">Kotlin的基本语法（六）</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">Kotlin的基本语法（六）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-02-02T13:48:50.000Z" title="Created 2026-02-02 21:48:50">2026-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-02-03T11:51:55.949Z" title="Updated 2026-02-03 19:51:55">2026-02-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Kotlin/">Kotlin</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>数据类和密封类（或者封闭类）是Kotlin中两种特殊的类，数据类用于描述数据和相应的操作，密封类相当于枚举的扩展，用于描述有限的数据。</p>
+<h3 id="数据类"><a href="#数据类" class="headerlink" title="数据类"></a>数据类</h3><p>数据类是Kotlin的一个语法糖，编译器会自动为数据类生成一些成员函数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">data class User(val name: String, var age: Int)</span><br></pre></td></tr></table></figure>
+
+<p>如果不使用数据类，会多出十几行代码，写法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class User(name: String, age: Int) &#123;</span><br><span class="line">    var name:String = name</span><br><span class="line">    var age:Int = age</span><br><span class="line">   </span><br><span class="line">    override fun toString() &#123;</span><br><span class="line">        return &quot;User(name = $name, age = $age)&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    override fun equals(other: Any?):Boolean &#123;</span><br><span class="line">        if (other is User) &#123;</span><br><span class="line">            if (name == other.name &amp;&amp; age == other.age) &#123;</span><br><span class="line">                return true</span><br><span class="line">            &#125; </span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return false</span><br><span class="line">        &#125;</span><br><span class="line">        return false</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所谓数据类，其实就是只定义必要的部分，其余的部分，可以自动推导。数据类规定，属性要通过主构造器指定，而且数据类要在class关键字前面加data。</p>
+<p><strong>注意事项</strong>：</p>
+<p><strong>·</strong> 主构造器至少要有一个参数。<br><strong>·</strong> 主构造器的所有参数必须标记为val或var。<br><strong>·</strong> 数据类不能是抽象类、open类、封闭（sealed）类或内部（inner）类。</p>
+<h3 id="密封类"><a href="#密封类" class="headerlink" title="密封类"></a>密封类</h3><p>封闭类也是Kotlin的一个语法糖。可以把它理解为枚举的扩展。一个封闭类，前面用sealed关键字标识。可以有任意多个子类或对象。封闭类的值只能是这些子类或对象。使用封闭类的好处主要是when表达式，不需要再使用else形式了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">sealed class Result &#123;</span><br><span class="line">    // 子类 1：数据类，带有成功的数据</span><br><span class="line">    data class Success(val data: String) : Result()</span><br><span class="line">    </span><br><span class="line">    // 子类 2：数据类，带有错误码和信息</span><br><span class="line">    data class Error(val code: Int, val message: String) : Result()</span><br><span class="line">    </span><br><span class="line">    // 子类 3：单例对象，表示加载中，不需要额外数据</span><br><span class="line">    object Loading : Result()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun handleResult(result: Result) &#123;</span><br><span class="line">    when (result) &#123;</span><br><span class="line">        is Result.Success -&gt; println(&quot;成功: $&#123;result.data&#125;&quot;)</span><br><span class="line">        is Result.Error -&gt; println(&quot;错误: $&#123;result.message&#125;&quot;)</span><br><span class="line">        Result.Loading -&gt; println(&quot;加载中...&quot;)</span><br><span class="line">        // 不需要 else 分支，因为所有情况都覆盖到了！</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在旧版 Kotlin 中，子类必须嵌套在密封类内部。现在，只要在同一个包（Package）和同一个编译单元中，子类可以写在密封类外面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sealed class NetworkError</span><br><span class="line">class Timeout(val ms: Long) : NetworkError()</span><br><span class="line">class Unknown(val e: Exception) : NetworkError()</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">John Doe</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/">http://example.com/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Kotlin/">Kotlin</a><a class="post-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/">教程</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/01/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%94%EF%BC%89/" title="Kotlin的基本语法（五）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">Kotlin的基本语法（五）</div></div><div class="info-2"><div class="info-item-1">枚举类在Kotlin中，枚举类型是以类的形式存在的，将可枚举的同类型的一组值作为枚举类定义，Kotlin中的一切都是对象，每一个枚举值也是对象，多个枚举值之间用逗号（,）分隔： 123enum class Direction &#123;    NORTH, SOUTH, WEST, EAST&#125;  从定义变量、初始化、判断变量是否相等方面介绍枚举的使用： 123456789var direction1: Directionvar direction2: Direction = Direction.NORTHvar direction3 = Direction.EASTvar direction4 = Direction.EASTif (direction3 == direction4) &#123;    println(&quot;direction3 == direction4&quot;)    &#125; else &#123;    println(&quot;direction3 != direction4&quot;) &#125;  直接输出枚举类的元...</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/2026/02/01/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%94%EF%BC%89/" title="Kotlin的基本语法（五）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-01</div><div class="info-item-2">Kotlin的基本语法（五）</div></div><div class="info-2"><div class="info-item-1">枚举类在Kotlin中，枚举类型是以类的形式存在的，将可枚举的同类型的一组值作为枚举类定义，Kotlin中的一切都是对象，每一个枚举值也是对象，多个枚举值之间用逗号（,）分隔： 123enum class Direction &#123;    NORTH, SOUTH, WEST, EAST&#125;  从定义变量、初始化、判断变量是否相等方面介绍枚举的使用： 123456789var direction1: Directionvar direction2: Direction = Direction.NORTHvar direction3 = Direction.EASTvar direction4 = Direction.EASTif (direction3 == direction4) &#123;    println(&quot;direction3 == direction4&quot;)    &#125; else &#123;    println(&quot;direction3 != direction4&quot;) &#125;  直接输出枚举类的元...</div></div></div></a><a class="pagination-related" href="/2026/01/30/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89/" title="Kotlin的基本语法（三）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-30</div><div class="info-item-2">Kotlin的基本语法（三）</div></div><div class="info-2"><div class="info-item-1">在Kotlin中，虽然支持完整的面向对象体系，不过Kotlin中的类与接口与大多数面向对象语言的不太一样。 类类的声明在Kotlin中，类的声明也使用class关键字，这与Java一样，如果只是声明一个空类，两者没有任何区别。不过要定义类的其他成员，差别就很大了。 12class MyClass&#123;&#125;  构造器在Kotlin中，类允许定义一个主构造器（primary constructor）和若干个第二构造器（secondary constructor）。主构造器是类头的一部分，紧跟在类名的后面，构造器参数是可选的。主构造器需要在init块中进行初始化，在init块中可以直接使用主构造器的参数。此外，主构造器的参数还可以用于对类属性的初始化。 12345678// 如果主构造器没有任何的注释（annotation）或修饰器（modifier），constructor关键字可以省略class Person constructor(name: String) &#123;    // 初始化成员属性    var myName = name    init &#12...</div></div></div></a><a class="pagination-related" href="/2026/02/01/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/" title="Kotlin的基本语法（四）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-02-01</div><div class="info-item-2">Kotlin的基本语法（四）</div></div><div class="info-2"><div class="info-item-1">修饰符（Modifiers）在Kotlin中，有四个修饰符： private：仅能在类的内部可以访问。protected：在类的内部或者子类中可以访问。internal：在模块内部的类可以访问。public：任何类都可以访问，如果不指定修饰符，默认是public。 1234567891011121314151617181920212223open class Outer &#123;    private val a: Int = 1    protected open val b = 2    internal val c = 3    val d = 4    protected class Nested &#123;        val e = 5	private val f = 6        fun foo() = 7        protected fun fool() = 8    &#125;&#125;class Subclass : Outer() &#123;    override val b = 20               // 重写父类的常...</div></div></div></a><a class="pagination-related" href="/2026/01/30/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Kotlin的基本语法（二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-30</div><div class="info-item-2">Kotlin的基本语法（二）</div></div><div class="info-2"><div class="info-item-1">控制流Kotlin的控制流与Java的控制流基本相同，只是使用when代替了switch，此外，在Kotlin中，if和when不仅可以作为语句使用，还可以作为表达式使用。 if语句在Kotlin中，if语句本身就是表达式，有返回值，并不需要像Java那样提供三元操作符。如果if或else后面是代码块，那么最后一个表达式是返回值： 123456789101112131415var a = 1var b = 2val max = if (a &gt; b) a else b  println(&quot;max is $max&quot;)val min = if (a &lt; b) &#123;    println(&quot;choose a&quot;)    a&#125; else &#123;    println(&quot;choose b&quot;)    b&#125;   println(&quot;min is $min&quot;)  在Java中，只能使用传统的写法： 123456789int a = 1;int b = 2;int max;if ...</div></div></div></a><a class="pagination-related" href="/2026/01/29/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%80%EF%BC%89/" title="Kotlin的基本语法（一）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-01-29</div><div class="info-item-2">Kotlin的基本语法（一）</div></div><div class="info-2"><div class="info-item-1">基本语法本文介绍定义变量和函数的基本方法，并辅以Java相关代码进行对比。 定义变量在Kotlin中，数据类型要放到变量后面，并且用冒号（:）分隔；变量和常量需要关键字，定义变量需要用var开头，定义常量需要用val开头；末尾不写分号（;）： 123456var n:Int = 30        // 定义变量n，初始化为30，数据类型即:Int可以省略var m:Int             // 定义变量m，并未初始化，必须指定数据类型即:Intval c:Int = 20        // 定义常量c，赋值为20m = 40                // 后期初始化变量m为40c = 10                // 编译出错，c是常量，&#x27;val&#x27; cannot be reassigned.var k = 100           // 自动推导变量k的数据类型为Int   在Java中，无论是变量还是常量，数据类型和其他关键字都会放到变量名的前面： 12345int n = 30;           // 定义变量n，初始化为3...</div></div></div></a></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">John Doe</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB"><span class="toc-number">1.</span> <span class="toc-text">数据类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%86%E5%B0%81%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">密封类</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/02/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%85%AD%EF%BC%89/" title="Kotlin的基本语法（六）">Kotlin的基本语法（六）</a><time datetime="2026-02-02T13:48:50.000Z" title="Created 2026-02-02 21:48:50">2026-02-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/01/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%94%EF%BC%89/" title="Kotlin的基本语法（五）">Kotlin的基本语法（五）</a><time datetime="2026-02-01T10:48:51.000Z" title="Created 2026-02-01 18:48:51">2026-02-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/01/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E5%9B%9B%EF%BC%89/" title="Kotlin的基本语法（四）">Kotlin的基本语法（四）</a><time datetime="2026-02-01T08:27:18.000Z" title="Created 2026-02-01 16:27:18">2026-02-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/30/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89/" title="Kotlin的基本语法（三）">Kotlin的基本语法（三）</a><time datetime="2026-01-30T03:35:02.000Z" title="Created 2026-01-30 11:35:02">2026-01-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/30/Kotlin%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95%EF%BC%88%E4%BA%8C%EF%BC%89/" title="Kotlin的基本语法（二）">Kotlin的基本语法（二）</a><time datetime="2026-01-30T01:12:13.000Z" title="Created 2026-01-30 09:12:13">2026-01-30</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By John Doe</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
